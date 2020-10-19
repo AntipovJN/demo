@@ -1,10 +1,8 @@
 package rest.message.saving.app.demo;
 
 import lombok.extern.log4j.Log4j2;
-import org.aspectj.weaver.ast.Not;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
