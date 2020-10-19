@@ -1,11 +1,14 @@
 package rest.message.saving.app.demo;
 
 import lombok.extern.log4j.Log4j2;
+import org.aspectj.weaver.ast.Not;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import rest.message.saving.app.demo.entity.Message;
@@ -27,7 +30,6 @@ class MessageSavingServiceApplicationTests {
     private HttpHeaders headers;
     private RestTemplate restTemplate;
 
-
     @PostConstruct
     void init() {
         this.restTemplate = new RestTemplate();
@@ -47,16 +49,18 @@ class MessageSavingServiceApplicationTests {
         for (Message sentMessage : sentMessages) {
             boolean messageWasFind = false;
             boolean notificationWasFind = false;
+            Notification foundNotification = null;
 
             for (int page = pagesCount; page >= 0; page--) {
                 Optional<Message> optionalMessageFromApi = findMessage(sentMessage, page);
                 Optional<Notification> optionalNotificationFromApi = findNotification(page, sentMessage);
-
                 if (optionalMessageFromApi.isPresent()) messageWasFind = true;
-                if (optionalNotificationFromApi.isPresent()) notificationWasFind = true;
-
+                if (optionalNotificationFromApi.isPresent()) {
+                    notificationWasFind = true;
+                    foundNotification = optionalNotificationFromApi.get();
+                }
                 if (messageWasFind && notificationWasFind) {
-                    if (optionalNotificationFromApi.get().getDelivered())
+                    if (foundNotification.getDelivered())
                         deliveredCount++;
                     else
                         notDeliveredCount++;
