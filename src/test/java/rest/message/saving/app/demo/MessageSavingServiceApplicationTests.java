@@ -19,7 +19,7 @@ import java.net.URI;
 import java.util.*;
 
 @Log4j2
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class MessageSavingServiceApplicationTests {
 
     private static final String SAVE_MESSAGE_URI = "http://localhost:8080/message";
