@@ -74,7 +74,6 @@ class MessageSavingServiceApplicationTests {
 
         }
 
-        log.warn("message was not save");
         logStatistic(deliveredCount, notDeliveredCount);
     }
 
