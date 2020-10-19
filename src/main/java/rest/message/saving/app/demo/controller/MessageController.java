@@ -31,7 +31,7 @@ public class MessageController {
     public void saveMessasge(@RequestBody Message message) throws InterruptedException, ExecutionException {
         Future<RuntimeException> futureException = messageSender.saveAndNotifyAsync(message);
         try {
-            futureException.get(1, TimeUnit.SECONDS);
+            futureException.get(100, TimeUnit.MILLISECONDS);
         } catch (TimeoutException e) {
             log.warn("Message save timeout");
         }
