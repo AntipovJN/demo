@@ -33,7 +33,7 @@ public class MessageController {
         try {
             futureException.get(100, TimeUnit.MILLISECONDS);
         } catch (TimeoutException e) {
-            log.warn("Message save timeout");
+            log.info("Message save timeout");
         }
     }
 
@@ -43,4 +43,8 @@ public class MessageController {
         return messageService.getMessages(page, MESSAGES_PER_PAGE);
     }
 
+    @GetMapping("/isready")
+    public synchronized Boolean check () {
+        return messageSender.isEmptyMessageCache();
+    }
 }
